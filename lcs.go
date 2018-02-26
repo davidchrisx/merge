@@ -28,14 +28,6 @@ func InitLCSTable(a, b []Line) *LCSTable {
 	return table
 }
 
-func ToLines(a []string) []Line {
-	out := make([]Line, len(a))
-	for i, line := range a {
-		out[i] = Line{i, line}
-	}
-	return out
-}
-
 // getLength return index for LCSTable from
 // index ai and index bi
 func (t *LCSTable) getLength(ai, bi int) int {
