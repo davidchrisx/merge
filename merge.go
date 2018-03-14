@@ -5,23 +5,23 @@ import (
 	"os"
 )
 
-func Merge3(o, a, b *os.File) string {
+func Merge3(o, a, b *os.File) (string, bool) {
 	ret := ""
 	oLine := toLine(o)
 	aLine := toLine(a)
 	bLine := toLine(b)
-	lines := Intersect3(oLine, aLine, bLine)
+	lines, conflict := Intersect3(oLine, aLine, bLine)
 	for _, r := range lines {
 		ret += r.Text + "\n"
 	}
-	return ret
+	return ret, conflict
 }
 
 //return all the line that intersect on the three texts.
-func Intersect3(o, a, b []Line) []Line {
+func Intersect3(o, a, b []Line) ([]Line, bool) {
 	aDiff := Diff(o, a)
 	bDiff := Diff(o, b)
-
+	conflict := false
 	stable := Intersect2(aDiff, bDiff)
 
 	oIntersect := Diff(o, stable)
@@ -46,6 +46,7 @@ func Intersect3(o, a, b []Line) []Line {
 				ret = appendl(ret, ca)
 			}
 			if !isEqual(co, ca) && !isEqual(co, cb) {
+				conflict = true
 				ret = append(ret, Line{Text: "<<<<<<< A"})
 				ret = appendl(ret, ca)
 				ret = append(ret, Line{Text: "<<<<<<< B"})
@@ -59,7 +60,7 @@ func Intersect3(o, a, b []Line) []Line {
 		}
 	}
 
-	return ret
+	return ret, conflict
 
 }
 

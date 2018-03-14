@@ -11,7 +11,7 @@ func TestMerge(t *testing.T) {
 		a, _ := os.Open("a.txt")
 		o, _ := os.Open("o.txt")
 		b, _ := os.Open("b.txt")
-		ret := Merge3(o, a, b)
+		ret, _ := Merge3(o, a, b)
 		if expectedString != ret {
 			t.Fatal(ret)
 		}
