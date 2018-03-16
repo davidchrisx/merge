@@ -47,9 +47,9 @@ func Intersect3(o, a, b []Line) ([]Line, bool) {
 			}
 			if !isEqual(co, ca) && !isEqual(co, cb) {
 				conflict = true
-				ret = append(ret, Line{Text: "<<<<<<< A"})
+				ret = append(ret, Line{Text: "<<<<<<< Your Change"})
 				ret = appendl(ret, ca)
-				ret = append(ret, Line{Text: "<<<<<<< B"})
+				ret = append(ret, Line{Text: "<<<<<<< New Change"})
 				ret = appendl(ret, cb)
 				ret = append(ret, Line{Text: "======="})
 			}
@@ -126,7 +126,7 @@ func isEqual(a, b []Line) bool {
 		return false
 	}
 
-	for in, _ := range a {
+	for in := range a {
 		if a[in].Text != b[in].Text {
 			return false
 		}
